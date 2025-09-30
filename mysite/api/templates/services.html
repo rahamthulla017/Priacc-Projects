@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Services - MySite{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/services.css' %}">
+{% endblock %}
+
+{% block content %}
+<nav class="navbar">
+  <div class="logo">MySite</div>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/services/">Services</a></li>
+    <li><a href="/products/">Products</a></li>
+    <li><a href="/about/">About Us</a></li>
+    <li><a href="/contact/">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <h1>Our Services</h1>
+  <p>We provide web design, SEO optimization, and more.</p>
+</section>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home - MySite{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<nav class="navbar">
+  <div class="logo">MySite</div>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/services/">Services</a></li>
+    <li><a href="/products/">Products</a></li>
+    <li><a href="/about/">About Us</a></li>
+    <li><a href="/contact/">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <h1>Welcome to Our Website</h1>
+  <p>We build modern, responsive, and high-performance web solutions.</p>
+</section>
+{% endblock %}

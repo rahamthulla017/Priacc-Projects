@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Contact - MySite{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/contact.css' %}">
+{% endblock %}
+
+{% block content %}
+<nav class="navbar">
+  <div class="logo">MySite</div>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/services/">Services</a></li>
+    <li><a href="/products/">Products</a></li>
+    <li><a href="/about/">About Us</a></li>
+    <li><a href="/contact/">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <h1>Contact Us</h1>
+  <p>We’d love to hear from you. Send us a message!</p>
+</section>
+
+<section class="contact-form">
+  <form id="contactForm">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="email" name="email" placeholder="Email Address" required>
+    <textarea name="message" placeholder="Your Message" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+</section>
+
+<script>
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+
+document.getElementById('contactForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const name = e.target.name.value;
+  const email = e.target.email.value;
+  const message = e.target.message.value;
+
+  try {
+    const response = await fetch('http://127.0.0.1:8000/api/contacts/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken   // ✅ send CSRF token
+      },
+      body: JSON.stringify({ name, email, message })
+    });
+
+    if (response.ok) {
+      alert('Message sent successfully!');
+      e.target.reset();
+    } else {
+      const errorData = await response.json();
+      console.error('Error:', errorData);
+      alert('Failed to send message: ' + JSON.stringify(errorData));
+    }
+  } catch (error) {
+    console.error('Network error:', error);
+    alert('Network error. Please try again.');
+  }
+});
+</script>
+
+
+{% endblock %}
